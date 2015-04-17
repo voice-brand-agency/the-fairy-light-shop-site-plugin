@@ -119,7 +119,7 @@ if ( ! function_exists( 'tfls_download_geoipdb' ) ) {
 				}
 			}
 
-			unlink($tmpFile);
+			unlink( $tmpFile );
 
 		} // End function_exists( 'download_url' )
 
@@ -128,11 +128,47 @@ if ( ! function_exists( 'tfls_download_geoipdb' ) ) {
 }
 
 // This basically maps the tfls_update_geoip hook to our tfls_download_geoipdb function
-add_action('tfls_update_geoip', 'tfls_download_geoipdb');
+add_action( 'tfls_update_geoip', 'tfls_download_geoipdb' );
 
 /**
- * Schedules regular updates of the geoip database.
+ * Used by 'cron_schedule' filter to ensure that '4weeks' is a valid recurrence strategy in 'wp_schedule_event'.
  *
- * @param
+ * @param array
+ *
+ * @return array
  */
-function tfls_cron_schedules($schedules)
+function tfls_cron_schedules( $schedules ) {
+
+	if ( ! array_key_exists( '4weeks', $schedules ) ) {
+		$schedules['4weeks'] = array(
+			'interval' => 2419200,
+			'display'  => __( 'Once every 4 weeks.' )
+		);
+	}
+
+	return $schedules;
+}
+
+add_filter( 'cron_schedules', 'tfls_cron_schedules' );
+
+/**
+ * Runs when plugin is de-activated, and ensures that all scheduled events (i.e. to update geoip database) are removed.
+ */
+function tfls_deactivate() {
+
+	if ( wp_next_scheduled( 'tfls_update_geoip' ) ) {
+		wp_clear_scheduled_hook( 'tfls_update_geoip' );
+	}
+}
+
+/**
+ * Runs when the plugin is activated. Setups up the scheduled geoip updates if the options is set.
+ */
+function tfls_activate() {
+
+	if ( get_option( 'tfls_update_geoip' ) && ! wp_next_scheduled( 'tfls_update_geoip' ) ) {``
+		wp_schedule_event( time(), '4weeks', 'tfls_update_geoip' );
+	}
+}
+
+register_activation_hook( TFLS_FILE, 'tfls_activate' );
