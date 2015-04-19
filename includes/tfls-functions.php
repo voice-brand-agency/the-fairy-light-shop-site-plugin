@@ -166,7 +166,7 @@ function tfls_deactivate() {
  */
 function tfls_activate() {
 
-	if ( get_option( 'tfls_update_geoip' ) && ! wp_next_scheduled( 'tfls_update_geoip' ) ) {``
+	if ( get_option( 'tfls_update_geoip' ) && ! wp_next_scheduled( 'tfls_update_geoip' ) ) {
 		wp_schedule_event( time(), '4weeks', 'tfls_update_geoip' );
 	}
 }
