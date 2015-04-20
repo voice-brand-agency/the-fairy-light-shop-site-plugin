@@ -139,7 +139,11 @@ if ( ! class_exists( 'TFLS_Admin' ) ) :
 												<input type="text" id="<?php echo '_' . $key . '_sale_price'; ?>"
 												       name="<?php echo '_' . $key . '_sale_price'; ?>"
 												       value="<?php echo wc_format_localized_price( get_post_meta( get_the_ID(), '_' . $key . '_sale_price', true ) ); ?>"
-												       class="wc_input_price TFLS_sale_price"/>
+												       class="short wc_input_price TFLS_sale_price"/>
+											</td>
+											<td>
+												<label style="margin:0px;"><?php echo __( 'Wholesale Price', 'woocommerce' ) . ' (' . get_woocommerce_currency_symbol( $value['currency'] ) . ')'; ?></label>
+												<input type="text" id="<?php echo '_' . $key . '_wholesale_price'; ?>" name="<?php echo '_' . $key . '_wholesale_price'; ?>" value="<?php echo wc_format_localized_price( get_post_meta( get_the_ID(), '_' . $key . '_wholesale_price', true ) ); ?>" class="short wc_input_price TFLS_sale_price" />
 											</td>
 										</tr>
 										</tbody>
