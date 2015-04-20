@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( in_array( 'woocommerce/wooocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) : // Is woocommerce active?
+if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) :
 
 	if ( ! class_exists( 'WC_Fairy_Light_Shop' ) ) : // Make sure that we're not stepping on anyone's toes
 
@@ -28,7 +28,7 @@ if ( in_array( 'woocommerce/wooocommerce.php', apply_filters( 'active_plugins', 
 			/**
 			 * @var The single instance of the class
 			 */
-			protected $_instance;
+			protected static $_instance = null;
 
 			/**
 			 * @var $regions
@@ -61,7 +61,7 @@ if ( in_array( 'woocommerce/wooocommerce.php', apply_filters( 'active_plugins', 
 
 				include_once 'includes/tfls-functions.php';
 
-				if ( $this->is_reqest( 'admin' ) ) {
+				if ( $this->is_request( 'admin' ) ) {
 					include_once 'includes/class-tfls-admin.php';
 				} elseif ( $this->is_request( 'frontend' ) ) {
 					require_once 'includes/class-tfls-frontend.php';
@@ -129,8 +129,27 @@ if ( in_array( 'woocommerce/wooocommerce.php', apply_filters( 'active_plugins', 
 
 	endif; // ! class_exists ( 'WC_The_Fairy_Light_Shop' )
 
-else:
+else :
+
+	add_action( 'admin_init', 'oga_tfls_deactivate' );
+
+	function oga_tfls_deactivate() {
+
+		deactivate_plugins( plugin_basename( __FILE__ ) );
+
+	}
+
+	add_action( 'admin_notices', 'oga_tfls_no_woocommerce_admin_notice' );
+
+	function oga_tfls_no_woocommerce_admin_notice() {
+
+		?>
+		<div class="updated">
+			<p><strong>The Fairy Light Shop Site Plugin </strong>has been deactivated because <a
+					href="http://woothemes.com/">Woocommerce plugin</a> is required</p>
+		</div>
+	<?php
+	}
 
 
-
-endif; // End check if woocommerce is enabled
+endif;
