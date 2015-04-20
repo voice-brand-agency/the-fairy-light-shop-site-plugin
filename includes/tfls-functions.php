@@ -106,8 +106,7 @@ if ( ! function_exists( 'tfls_download_geoipdb' ) ) {
 					// TODO: Was the use of $outFile an error? Or does this variable have special significance?
 					// TODO: I'm unable to find any reference to $outFile anywhere in the project source.
 
-					//$result = __( 'Database could not be written (%s).', 'the-fairy-light-shop-site-plugin' );
-					$result = sprintf(__('Database could not be written (%s).', 'woocommerce-the-fairy-light-shop'), $outFile);
+					$result = __( 'Database could not be written.', 'the-fairy-light-shop-site-plugin' );
 				} else {
 					// Read the database in 4kb chunks, writing to our local db.
 					while ( ( $string = gzread( $zh, 4096 ) ) !== false ) {

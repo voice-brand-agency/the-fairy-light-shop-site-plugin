@@ -56,7 +56,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 
 				// I presume these will be used to help administer the monthly refresh of the GeoIP database
 				define( 'TFLS_FILE', __FILE__ );
-				define( 'TFLS_UPLOAD_DIR', $upload_dir['base_dir'] . '/the_fairy_light_shop_site_plugin' );
+				define( 'TFLS_UPLOAD_DIR', $upload_dir['basedir'] . '/the_fairy_light_shop_site_plugin' );
 				define( 'TFLS_GEOIP_DB', TFLS_UPLOAD_DIR . '/GeoLite2-Country.mmdb' );
 
 				include_once 'includes/tfls-functions.php';
