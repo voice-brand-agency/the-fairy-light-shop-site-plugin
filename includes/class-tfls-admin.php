@@ -351,9 +351,9 @@ if ( ! class_exists( 'TFLS_Admin' ) ) :
 			if ( ! file_exists( TFLS_GEOIP_DB ) ) {
 				?>
 				<div class="update-nag">
-					<strong>The Fairy Light S</strong> now works with <span
+					<strong>The Fairy Light Shop </strong>now works with <span
 						style="font-style:italic">GeoIP Database</span>, please go to <a
-						href="<?php echo self_admin_url( 'admin.php?page=wc-settings&tab=pthe_fairy_light_shop' ); ?>">settings
+						href="<?php echo self_admin_url( 'admin.php?page=wc-settings&tab=the_fairy_light_shop' ); ?>">settings
 						page</a> to activate.
 				</div>
 			<?php

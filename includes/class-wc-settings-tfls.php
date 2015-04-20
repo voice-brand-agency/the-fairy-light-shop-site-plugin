@@ -280,7 +280,7 @@ if ( ! class_exists( 'WC_Settings_TFLS' ) ) :
 					</th>
 					<td class="forminp">
 						<select multiple="multiple" name="group_countries[]" style="width:350px"
-						        data-placeholder="<?php _e( 'Choose countries&hellip;', 'woocommerce-tfls' ); ?>"
+						        data-placeholder="<?php _e( 'Choose countries&hellip;', 'woocommerce' ); ?>"
 						        title="Country" class="chosen_select">
 							<?php
 
@@ -399,7 +399,7 @@ if ( ! class_exists( 'WC_Settings_TFLS' ) ) :
 				parent::output();
 			}
 
-			wp_enqueue_script( 'wc-tfls-admin', plugin_dir_url( TFLS_FILE ) . 'assets/js/wcpbc-admin.js', array( 'woocommerce_settings' ), WC_VERSION, true );
+			wp_enqueue_script( 'wc-tfls-admin', plugin_dir_url( TFLS_FILE ) . 'assets/js/tfls-admin.js', array( 'woocommerce_settings' ), WC_VERSION, true );
 		}
 
 
@@ -498,9 +498,9 @@ if ( ! class_exists( 'WC_Settings_TFLS' ) ) :
 
 					//Database geoip update
 
-					if ( ! wp_next_scheduled( 'wcpbc_update_geoip' ) && isset( $_POST['wc_tfls_update_geoip'] ) ) {
+					if ( ! wp_next_scheduled( 'tfls_update_geoip' ) && isset( $_POST['wc_tfls_update_geoip'] ) ) {
 
-						$update_errors = wcpbc_donwload_geoipdb();
+						$update_errors = tfls_donwload_geoipdb();
 
 						if ( $update_errors ) {
 
@@ -509,16 +509,16 @@ if ( ! class_exists( 'WC_Settings_TFLS' ) ) :
 							unset( $_POST['wc_tfls_update_geoip'] );
 
 						} else {
-							wp_schedule_event( time() + 2419200, '4weeks', 'wcpbc_update_geoip' );
+							wp_schedule_event( time() + 2419200, '4weeks', 'tfls_update_geoip' );
 
 							WC_Admin_Settings::add_message( __( 'GeoIP info has been updated.', 'woocommerce-tfls' ) );
 
 						}
 
 
-					} elseif ( wp_next_scheduled( 'wcpbc_update_geoip' ) && ! isset( $_POST['wc_tfls_update_geoip'] ) ) {
+					} elseif ( wp_next_scheduled( 'tfls_update_geoip' ) && ! isset( $_POST['wc_tfls_update_geoip'] ) ) {
 
-						wp_unschedule_event( wp_next_scheduled( 'wcpbc_update_geoip' ), 'wcpbc_update_geoip' );
+						wp_unschedule_event( wp_next_scheduled( 'tfls_update_geoip' ), 'tfls_update_geoip' );
 					}
 
 					//save settings
