@@ -1,5 +1,4 @@
 <?php
-
 /*
 Plugin Name: The Fairy Light Shop Site Plugin
 Plugin URI: http://voice.co.nz/
@@ -7,7 +6,7 @@ Description: Our take on WooCommerce Product Price Based on Countries (https://g
 Version: 1.0
 Author: Nicholas Byfleet
 Author URI: http://nbyfleet.com/
-License: A "Slug" license name e.g. GPL2
+License: A http://www.binpress.com/license/view/l/a59b50bad876cc0b780d0d2652b39ca4
 */
 
 if ( ! defined( 'ABSPATH' ) ) {

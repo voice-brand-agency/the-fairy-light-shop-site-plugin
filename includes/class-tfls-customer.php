@@ -9,7 +9,7 @@ if ( ! class_exists( 'TFLS_Customer' ) ) :
 	/**
 	 * TFLS_Customer
 	 *
-	 * Store WCPBC frontend data Handler
+	 * Store TFLS frontend data Handler
 	 *
 	 * @class       TFLS_Customer
 	 * @version     1.0.0
