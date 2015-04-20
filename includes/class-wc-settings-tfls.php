@@ -500,7 +500,7 @@ if ( ! class_exists( 'WC_Settings_TFLS' ) ) :
 
 					if ( ! wp_next_scheduled( 'tfls_update_geoip' ) && isset( $_POST['wc_tfls_update_geoip'] ) ) {
 
-						$update_errors = tfls_donwload_geoipdb();
+						$update_errors = tfls_download_geoipdb();
 
 						if ( $update_errors ) {
 
