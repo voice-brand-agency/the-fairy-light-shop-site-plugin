@@ -32,6 +32,19 @@ if ( ! class_exists( 'TFLS_Admin' ) ) :
 
 			add_filter( 'woocommerce_get_settings_pages', array( &$this, 'settings_tfls' ) );
 
+			// Add wholesale price field to product
+			add_action( 'woocommerce_product_options_general_product_data', array(
+				&$this,
+				'product_options_wholesale_price'
+			));
+
+			// Save wholesale prices
+			add_action( 'woocommerce_process_product_meta', array(
+				&$this,
+				'process_product_simple_wholesale_price'
+			));
+
+			// Add international and wholesale prices to products
 			add_action( 'woocommerce_product_options_general_product_data', array(
 				&$this,
 				'product_options_countries_prices'
@@ -164,6 +177,22 @@ if ( ! class_exists( 'TFLS_Admin' ) ) :
 		}
 
 		/**
+		 * Add wholesale option to regular (non-international) product options
+		 */
+		function product_options_wholesale_price() {
+			woocommerce_wp_text_input(
+				array(
+					'id'            => '_wholesale_price',
+					'label'         => __( 'Wholesale Price', 'woocommerce' ),
+					'placeholder'   => '',
+					'desc_tip'      => 'true',
+					'description'   => __( 'Enter a wholesale price.', 'woocommerce' ),
+					'type'          => 'number'
+				)
+			);
+		}
+
+		/**
 		 * Save meta data product simple
 		 */
 		function process_product_simple_countries_prices( $post_id ) {
@@ -177,8 +206,19 @@ if ( ! class_exists( 'TFLS_Admin' ) ) :
 				$id = '_' . $key . '_sale_price';
 
 				update_post_meta( $post_id, $id, wc_format_decimal( $_POST[ $id ] ) );
+
+				$id = '_' . $key . '_wholesale_price';
+
+				update_post_meta( $post_id, $id, wc_format_decimal( $_POST[ $id ] ) );
 			}
 
+		}
+
+		/**
+		 * Save the products wholesale price
+		 */
+		function process_product_simple_wholesale_price( $post_id ) {
+			update_post_meta( $post_id, '_wholesale_price', wc_format_decimal( $_POST['_wholesale_price'] ) );
 		}
 
 		/**
@@ -228,6 +268,18 @@ if ( ! class_exists( 'TFLS_Admin' ) ) :
 							<label><?php echo __( 'Sale Price', 'woocommerce' ) . ' (' . get_woocommerce_currency_symbol( $value['currency'] ) . ')'; ?></label>
 							<input type="text" name="<?php echo $id . '[' . $loop . ']'; ?>"
 							       value="<?php echo $price; ?>" class="wc_input_price"/>
+						</td>
+
+						<td>
+							<?php
+
+							$id = '_' . $key . '_variable_wholesale_price';
+
+							$price = wc_format_localized_price( usset( $variation_data[$id] ) ? esc_attr( $variation_data[$id][0] ) : '' );
+
+							?>
+							<label><?php echo __( 'Wholesale Price', 'woocommerce' ) . ' )' . get_woocommerce_currency_symbol( $value['currency'] ) . ')'; ?></label>
+							<input type="text" name="<?php echo $id . '[' . $loop .']'; ?>" value="<?php echo $price; ?>" class="wc_input_price" />
 						</td>
 
 					</tr>
