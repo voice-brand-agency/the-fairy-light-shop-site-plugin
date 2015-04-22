@@ -231,8 +231,6 @@ if ( ! class_exists( 'TFLS_Frontend' ) ) :
 		 */
 		public function get_variation_regular_price( $price, $product, $min_or_max, $display ) {
 
-			$tfls_price = $price;
-
 			$tax_display_mode = get_option( 'woocommerce_tax_display_shop' );
 
 			$prices = array();

@@ -503,7 +503,6 @@ if ( ! class_exists( 'WC_Settings_TFLS' ) ) :
 						$update_errors = tfls_download_geoipdb();
 
 						if ( $update_errors ) {
-
 							WC_Admin_Settings::add_error( $update_errors );
 
 							unset( $_POST['wc_tfls_update_geoip'] );

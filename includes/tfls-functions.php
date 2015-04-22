@@ -109,8 +109,8 @@ if ( ! function_exists( 'tfls_download_geoipdb' ) ) {
 					$result = __( 'Database could not be written.', 'the-fairy-light-shop-site-plugin' );
 				} else {
 					// Read the database in 4kb chunks, writing to our local db.
-					while ( ( $string = gzread( $zh, 4096 ) ) !== false ) {
-						fwrite( $h, $string );
+					while ( ( $string = gzread( $zh, 4096 ) ) != false ) {
+						fwrite( $h, $string, strlen($string) );
 					}
 
 					// Close all the handlers
@@ -169,6 +169,11 @@ function tfls_activate() {
 	if ( get_option( 'tfls_update_geoip' ) && ! wp_next_scheduled( 'tfls_update_geoip' ) ) {
 		wp_schedule_event( time(), '4weeks', 'tfls_update_geoip' );
 	}
+
+	// Add the wholesaler role
+	add_role( 'wholesaler', 'Wholesaler', array(
+		'read' => true
+	));
 }
 
 register_activation_hook( TFLS_FILE, 'tfls_activate' );

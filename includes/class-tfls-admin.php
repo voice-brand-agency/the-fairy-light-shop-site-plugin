@@ -187,7 +187,7 @@ if ( ! class_exists( 'TFLS_Admin' ) ) :
 					'placeholder'   => '',
 					'desc_tip'      => 'true',
 					'description'   => __( 'Enter a wholesale price.', 'woocommerce' ),
-					'type'          => 'number'
+					'data_type'          => 'price'
 				)
 			);
 		}
