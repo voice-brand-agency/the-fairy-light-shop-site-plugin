@@ -196,7 +196,6 @@ if ( ! class_exists( 'TFLS_Frontend' ) ) :
 			return $tfls_price;
 		}
 
-
 		/**
 		 * Returns the product's sale price
 		 * @return string price
@@ -214,13 +213,10 @@ if ( ! class_exists( 'TFLS_Frontend' ) ) :
 		 */
 		public function get_price( $price, $product ) {
 
-			$wholesale_price = $this->get_wholesale_price( $product );
-			$current_user    = wp_get_current_user();
+			$current_user = wp_get_current_user();
 
 			if ( is_a( $current_user, 'WP_User' ) && $current_user->has_cap( 'wholesaler' ) ) {
-				if ( ! is_null( $wholesale_price ) ) {
-					return $wholesale_price;
-				}
+				return $this->get_regular_price( '', $product, '_wholesale_price' );
 			}
 
 			$tfls_sale_price = $this->get_sale_price( '', $product );
@@ -297,18 +293,6 @@ if ( ! class_exists( 'TFLS_Frontend' ) ) :
 
 			return $tfls_price;
 		}
-
-		/**
-		 * Get the wholesale price.
-		 */
-		public function get_wholesale_price( $product ) {
-
-			$wholesale_price = get_post_meta( $product->id, '_wholesale_price', true );
-
-			if ( $wholesale_price !== false )
-				return $wholesale_price;
-		}
-
 	}
 
 endif;
