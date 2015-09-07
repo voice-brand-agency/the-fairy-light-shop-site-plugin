@@ -423,7 +423,7 @@ if ( ! class_exists( 'TFLS_Admin' ) ) :
 
 			$suffix = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 
-			wp_enqueue_script( 'wc-tfls-admin', plugin_dir_url( TFLS_FILE ) . 'assets/js/TFLS-admin' . $suffix . '.js', array( 'jquery' ), WC_VERSION, true );
+			wp_enqueue_script( 'wc-tfls-admin', plugin_dir_url( TFLS_FILE ) . 'assets/js/tfls-admin' . $suffix . '.js', array( 'jquery' ), WC_VERSION, true );
 
 		}
 
